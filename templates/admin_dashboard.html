@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>SecureDesk Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header class="top-navbar">
+
+    <div class="nav-left">
+
+        <a href="/" class="home-link">
+            🏠 Home
+        </a>
+
+    </div>
+
+    <div class="logo">
+        SECUREDESK
+    </div>
+
+    <div class="nav-right">
+
+        <a href="/logout" class="logout-btn">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+<div class="hero">
+
+    <div class="dashboard-badge">
+        IT SERVICE MANAGEMENT
+    </div>
+
+    <h1>SecureDesk Operations Center</h1>
+
+    <p>
+        Monitor incidents, engineers, SLA compliance,
+        ticket analytics and service performance.
+    </p>
+
+
+    <!-- CHARTS -->
+
+    <div class="analytics-grid">
+
+        <div class="dashboard-card">
+
+            <h3>Ticket Status Analysis</h3>
+
+            <canvas id="ticketChart"></canvas>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>Category Distribution</h3>
+
+            <canvas id="categoryChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN GRID -->
+
+    <div class="dashboard-layout">
+
+
+        <!-- Incident Queue -->
+
+        <div class="dashboard-card">
+
+            <div class="card-header">
+
+                <h3>Incident Queue</h3>
+
+                <span>
+                    {{ open_count }} Active
+                </span>
+
+            </div>
+
+            <table class="ticket-table">
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Engineer</th>
+
+                </tr>
+
+                {% for ticket in recent_tickets %}
+
+                <tr>
+
+                    <td>#{{ ticket[0] }}</td>
+                    <td>{{ ticket[1] }}</td>
+                    <td>{{ ticket[4] }}</td>
+                    <td>{{ ticket[5] }}</td>
+                    <td>{{ ticket[6] }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+
+        <!-- Company Overview -->
+
+        <div class="dashboard-card">
+
+            <h3>🏢 Company Overview</h3>
+
+            <div class="overview-row">
+                <span>Total Technicians</span>
+                <b>{{ total_engineers }}</b>
+            </div>
+
+            <div class="overview-row">
+                <span>Total Tickets</span>
+                <b>{{ total_tickets }}</b>
+            </div>
+
+            <div class="overview-row">
+                <span>Active Incidents</span>
+                <b>{{ active_incidents }}</b>
+            </div>
+
+            <div class="overview-row">
+                <span>Resolved Tickets</span>
+                <b>{{ resolved_today }}</b>
+            </div>
+
+            <div class="overview-row">
+                <span>Platform</span>
+                <b>SecureDesk ITSM</b>
+            </div>
+
+        </div>
+
+
+        <!-- Engineer Workload -->
+
+        <div class="dashboard-card">
+
+            <h3>Engineer Workload</h3>
+
+            {% for engineer in engineer_workload %}
+
+            <div class="workload-row">
+
+                <span>{{ engineer[0] }}</span>
+
+                <span>
+                    {{ engineer[1] }} Tickets
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- Team Availability -->
+
+        <div class="dashboard-card">
+
+            <h3>👥 Team Availability</h3>
+
+            {% for member in team_status %}
+
+            <div class="workload-row">
+
+                <span>👨‍💻 {{ member[0] }}</span>
+
+                <span>
+
+                    {% if member[1] > 0 %}
+
+                        🟡 Working
+
+                    {% else %}
+
+                        🟢 Available
+
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- SLA Monitor -->
+
+        <div class="dashboard-card">
+
+            <h3>⏱ SLA Monitor</h3>
+
+            {% for ticket in sla_tickets %}
+
+            <div class="sla-item">
+
+                <span>#{{ ticket[0] }}</span>
+
+                <span>{{ ticket[1] }}</span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Quick Actions -->
+
+        <div class="dashboard-card">
+
+            <h3>⚡ Quick Actions</h3>
+
+            <div class="quick-actions">
+
+                <a href="/manage-tickets" class="action-btn">
+                    Manage Tickets
+                </a>
+
+                <a href="/create-engineer" class="action-btn">
+                    Add Technician
+                </a>
+
+            </div>
+
+        </div>
+
+<!-- Current Employees -->
+
+<div class="dashboard-card">
+
+    <h3>Current Employees</h3>
+
+    <table class="ticket-table">
+
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+
+        {% for emp in employees %}
+
+        <tr>
+
+            <td>{{ emp[1] }}</td>
+
+            <td>{{ emp[2] }}</td>
+
+            <td>
+
+                <input
+                    type="password"
+                    value="{{ emp[3] }}"
+                    id="emp{{ emp[0] }}"
+                    class="pass-input"
+                    readonly>
+
+                <button
+                    class="eye-btn"
+                    onclick="togglePassword('emp{{ emp[0] }}')">
+
+                    👁
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+
+<!-- Current Technicians -->
+
+<div class="dashboard-card">
+
+    <h3>Current Technicians</h3>
+
+    <table class="ticket-table">
+
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+
+        {% for tech in technicians %}
+
+        <tr>
+
+            <td>{{ tech[1] }}</td>
+
+            <td>{{ tech[2] }}</td>
+
+            <td>
+
+                <input
+                    type="password"
+                    value="{{ tech[3] }}"
+                    id="tech{{ tech[0] }}"
+                    class="pass-input"
+                    readonly>
+
+                <button
+                    class="eye-btn"
+                    onclick="togglePassword('tech{{ tech[0] }}')">
+
+                    👁
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+
+</div> <!-- dashboard-layout -->
+</div> <!-- hero -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// Ticket Status Chart
+
+new Chart(document.getElementById("ticketChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: [
+            "Open",
+            "In Progress",
+            "Resolved"
+        ],
+
+        datasets: [{
+
+            label: "Tickets",
+
+            data: [
+                {{ open_count }},
+                {{ progress_count }},
+                {{ resolved_count }}
+            ],
+
+            backgroundColor: [
+                "#ef4444",
+                "#f59e0b",
+                "#10b981"
+            ],
+
+            borderRadius: 10
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+                display: false
+            }
+
+        },
+
+        animation: {
+            duration: 1500
+        },
+
+        scales: {
+
+            y: {
+                beginAtZero: true
+            }
+
+        }
+
+    }
+
+});
+
+
+// Category Chart
+
+new Chart(document.getElementById("categoryChart"), {
+
+    type: "doughnut",
+
+    data: {
+
+        labels: [
+            "Hardware",
+            "Software",
+            "Network",
+            "Other"
+        ],
+
+        datasets: [{
+
+            data: [
+
+                {{ hardware_count }},
+                {{ software_count }},
+                {{ network_count }},
+                {{ other_count }}
+
+            ],
+
+            backgroundColor: [
+
+                "#3b82f6",
+                "#8b5cf6",
+                "#14b8a6",
+                "#64748b"
+
+            ],
+
+            borderWidth: 2
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+                position: "bottom"
+            }
+
+        },
+
+        animation: {
+
+            animateScale: true,
+            duration: 1800
+
+        }
+
+    }
+
+});
+
+
+// Password Toggle
+
+function togglePassword(id) {
+
+    let x = document.getElementById(id);
+
+    if (x.type === "password") {
+
+        x.type = "text";
+
+    } else {
+
+        x.type = "password";
+
+    }
+
+}
+
+</script>
+
+
+<footer class="footer">
+
+    <h2>SecureDesk</h2>
+
+    <p>Smart IT Service Management Platform</p>
+
+    <p>📧 support@securedesk.com</p>
+
+    <p>📞 +91 9876543210</p>
+
+    <p>© 2026 SecureDesk IT Solutions. All Rights Reserved.</p>
+
+</footer>
+
+
+</body>
+</html>

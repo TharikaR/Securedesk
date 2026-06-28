@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SecureDesk Employee Portal</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="content">
+<!-- Header -->
+
+<div class="portal-header">
+
+    <div>
+
+        <div class="dashboard-badge">
+            EMPLOYEE SERVICE PORTAL
+        </div>
+
+        <h1>
+            Welcome to SecureDesk
+        </h1>
+
+        <p>
+            Manage support requests, monitor ticket progress
+            and collaborate with the IT service desk.
+        </p>
+    <div class="portal-actions">
+
+    <a href="/create-ticket"
+       class="create-ticket-btn">
+
+        + Create Ticket
+
+    </a>
+
+</div>
+
+    </div>
+
+   <div>
+
+        <h2>Employee</h2>
+
+    </div>
+
+</div>
+
+<!-- KPI Cards -->
+<div class="stats-grid">
+    <div class="stat-box">
+        <h2>{{ total_count }}</h2>
+        <p>Total Requests</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>{{ open_count }}</h2>
+        <p>Open</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>{{ progress_count }}</h2>
+        <p>In Progress</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>{{ resolved_count }}</h2>
+        <p>Resolved</p>
+    </div>
+
+</div>
+
+<!-- Main Layout -->
+
+<div class="dashboard-layout">
+
+    <!-- Left -->
+
+    <div class="dashboard-left">
+
+        <div class="dashboard-card">
+
+            <div class="section-header">
+
+                <h3>My Active Requests</h3>
+
+                <a href="/my-tickets">
+                    View All
+                </a>
+
+            </div>
+
+            <table class="ticket-table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for ticket in tickets %}
+
+                <tr>
+
+                    <td>#{{ ticket[0] }}</td>
+
+                    <td>{{ ticket[1] }}</td>
+
+                    <td>{{ ticket[4] }}</td>
+
+                    <td>
+
+                        <span class="status-badge">
+
+                            {{ ticket[5] }}
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>Priority Requests</h3>
+
+            <table class="ticket-table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Priority</th>
+                </tr>
+
+                {% for ticket in tickets %}
+
+                {% if ticket[4] == 'High' %}
+
+                <tr>
+
+                    <td>#{{ ticket[0] }}</td>
+
+                    <td>{{ ticket[1] }}</td>
+
+                    <td>{{ ticket[4] }}</td>
+
+                </tr>
+
+                {% endif %}
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Right -->
+
+    <div class="dashboard-right">
+
+        <div class="dashboard-card">
+
+            <h3>Recent Updates</h3>
+
+            {% for activity in recent_activity %}
+
+            <div class="activity-row">
+
+                Ticket #{{ activity[0] }}
+
+                →
+
+                {{ activity[1] }}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>Request Summary</h3>
+
+            <div class="timeline-row">
+
+                <span>Open Requests</span>
+
+                <span>{{ open_count }}</span>
+
+            </div>
+
+            <div class="timeline-row">
+
+                <span>In Progress</span>
+
+                <span>{{ progress_count }}</span>
+
+            </div>
+
+            <div class="timeline-row">
+
+                <span>Resolved</span>
+
+                <span>{{ resolved_count }}</span>
+
+            </div>
+
+            <div class="timeline-row">
+
+                <span>Total Requests</span>
+
+                <span>{{ total_count }}</span>
+
+            </div>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>Quick Actions</h3>
+
+            <a href="/create-ticket"
+               class="mini-btn">
+
+                Create Ticket
+
+            </a>
+
+            <a href="/my-tickets"
+               class="mini-btn">
+
+                View Requests
+
+            </a>
+
+            <a href="/logout"
+               class="mini-btn">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+<footer class="footer">
+
+    <h2>SecureDesk</h2>
+
+    <p>Smart IT Service Management Platform</p>
+
+    <p>📧 support@securedesk.com</p>
+
+    <p>📞 +91 9876543210</p>
+
+    <p>© 2026 SecureDesk IT Solutions. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+</html>
+

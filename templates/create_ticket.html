@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Create Ticket - SecureDesk</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="top-nav">
+    <a href="/dashboard" class="back-btn">
+        ← Back
+    </a>
+</div>    
+
+<div class="ticket-page">
+
+    <div class="ticket-card">
+
+        <div class="logo">
+            SECUREDESK
+        </div>
+
+        <h1>Create Support Ticket</h1>
+
+        <p class="subtitle">
+            Submit an IT issue and track its resolution progress.
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Issue Title"
+                required>
+
+            <textarea
+                name="description"
+                placeholder="Describe your issue"
+                required></textarea>
+
+            <select name="priority">
+
+                <option value="Low">
+                    Low Priority
+                </option>
+
+                <option value="Medium">
+                    Medium Priority
+                </option>
+
+                <option value="High">
+                    High Priority
+                </option>
+
+            </select>
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                Submit Ticket
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+<footer class="footer">
+
+    <h2>SecureDesk</h2>
+
+    <p>Smart IT Service Management Platform</p>
+
+    <p>📧 support@securedesk.com</p>
+
+    <p>📞 +91 9876543210</p>
+
+    <p>© 2026 SecureDesk IT Solutions. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Analytics</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="top-nav">
+    <a href="/admin-dashboard" class="back-btn">
+        ← Back
+    </a>
+</div>
+
+<div class="report-container">
+
+<h1>Analytics Dashboard</h1>
+
+<div class="report-cards">
+
+<div class="report-card">
+<h2>{{ total }}</h2>
+<p>Total Tickets</p>
+</div>
+
+<div class="report-card">
+<h2>{{ open_count }}</h2>
+<p>Open Tickets</p>
+</div>
+
+<div class="report-card">
+<h2>{{ resolved }}</h2>
+<p>Resolved Tickets</p>
+</div>
+
+<div class="report-card">
+<h2>{{ high_priority }}</h2>
+<p>High Priority</p>
+</div>
+
+</div>
+
+<canvas id="ticketChart"></canvas>
+
+</div>
+
+<script>
+
+new Chart(
+document.getElementById('ticketChart'),
+{
+type:'line',
+
+data:{
+labels:[
+'Mon',
+'Tue',
+'Wed',
+'Thu',
+'Fri',
+'Sat',
+'Sun'
+],
+
+datasets:[{
+label:'Tickets',
+data:[5,8,3,10,6,9,4]
+}]
+}
+}
+);
+
+</script>
+
+</body>
+</html>

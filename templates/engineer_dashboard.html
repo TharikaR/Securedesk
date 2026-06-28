@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Engineer Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<a href="/"
+
+class="back-btn">
+
+🏠 Home
+
+</a>
+
+<body>
+
+<div class="hero">
+
+<div class="engineer-container">
+
+<div class="dashboard-badge">
+TECHNICIAN OPERATIONS CENTER
+</div>
+
+<h1>Welcome Technician</h1>
+
+<p>
+Manage assigned incidents, update ticket status and resolve support tickets.
+</p>
+
+<div class="stats-grid">
+
+<div class="stat-box">
+<h2>{{ assigned_count }}</h2>
+<p>Assigned</p>
+</div>
+
+<div class="stat-box">
+<h2>{{ open_count }}</h2>
+<p>Open</p>
+</div>
+
+<div class="stat-box">
+<h2>{{ working_count }}</h2>
+<p>Working</p>
+</div>
+
+<div class="stat-box">
+<h2>{{ resolved_count }}</h2>
+<p>Resolved</p>
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<h2>My Assigned Incidents</h2>
+
+<table class="ticket-table">
+
+<tr>
+<th>ID</th>
+<th>Title</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Update</th>
+</tr>
+
+{% for ticket in tickets %}
+
+<tr>
+
+<td>#{{ ticket[0] }}</td>
+
+<td>{{ ticket[1] }}</td>
+
+<td>{{ ticket[4] }}</td>
+
+<td>{{ ticket[5] }}</td>
+
+<td>
+
+{% if ticket[5]=='Resolved' %}
+
+<span class="resolved-badge">
+
+✅ Resolved
+
+</span>
+
+<a href="/edit-ticket/{{ ticket[0] }}"
+
+class="edit-btn">
+
+Edit Status
+
+</a>
+
+{% else %}
+
+<form method="POST"
+
+action="/update-ticket-status">
+
+<input type="hidden"
+
+name="ticket_id"
+
+value="{{ ticket[0] }}">
+
+<select name="status">
+
+<option value="Open">Open</option>
+
+<option value="In Progress">In Progress</option>
+
+<option value="Resolved">Resolved</option>
+
+</select>
+
+<button type="submit">
+
+Update
+
+</button>
+
+</form>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+<div class="dashboard-card">
+
+<h2>SLA Monitor</h2>
+
+<div class="sla-row">
+
+<span>
+Within SLA
+</span>
+
+<span>
+{{ assigned_count - open_count }}
+</span>
+
+</div>
+
+<div class="sla-row">
+
+<span>
+Due Soon
+</span>
+
+<span>
+{{ open_count }}
+</span>
+
+</div>
+
+<div class="sla-row">
+
+<span>
+Resolved Today
+</span>
+
+<span>
+{{ resolved_count }}
+</span>
+
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<h2>Recent Activity</h2>
+
+{% for activity in recent_activity %}
+
+<div class="activity-row">
+
+Ticket #{{ activity[0] }}
+
+→
+
+{{ activity[1] }}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<footer class="footer">
+
+    <h2>SecureDesk</h2>
+
+    <p>Smart IT Service Management Platform</p>
+
+    <p>📧 support@securedesk.com</p>
+
+    <p>📞 +91 9876543210</p>
+
+    <p>© 2026 SecureDesk IT Solutions. All Rights Reserved.</p>
+
+</footer>
+
+
+</body>
+</html>

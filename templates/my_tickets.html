@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>My Tickets</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="top-nav">
+    <a href="/dashboard" class="back-btn">
+        ← Back
+    </a>
+</div>
+
+<div class="tickets-page">
+
+    <h1>My Support Tickets</h1>
+
+    <!-- Category Cards -->
+
+    <!-- Ticket Cards -->
+
+    <div class="ticket-grid">
+
+        {% for ticket in tickets %}
+
+        <div class="ticket-box">
+
+            <span class="ticket-id">
+                Ticket #{{ ticket[0] }}
+            </span>
+
+            <h3>
+                {{ ticket[1] }}
+            </h3>
+
+            <p>
+                {{ ticket[2] }}
+            </p>
+
+            <div class="ticket-meta">
+
+                <span>
+                    {{ ticket[3] }}
+                </span>
+
+                <span>
+                    {{ ticket[4] }}
+                </span>
+
+                <span>
+                    {{ ticket[5] }}
+                </span>
+
+            </div>
+
+
+        <div class="ticket-extra">
+
+        <p>
+        👨‍💻 Assigned To:
+        <b>{{ ticket[6] }}</b>
+        </p>
+
+        </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+<footer class="footer">
+
+    <h2>SecureDesk</h2>
+
+    <p>Smart IT Service Management Platform</p>
+
+    <p>📧 support@securedesk.com</p>
+
+    <p>📞 +91 9876543210</p>
+
+    <p>© 2026 SecureDesk IT Solutions. All Rights Reserved.</p>
+
+</footer>
+</body>
+</html>

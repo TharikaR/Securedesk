@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Add Technician</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="hero">
+
+<div class="login-container">
+
+<h2>➕ Add Technician</h2>
+
+<form method="POST">
+
+<input type="text"
+name="name"
+placeholder="Technician Name"
+required>
+
+<input type="email"
+name="email"
+placeholder="Email"
+required>
+
+<input type="password"
+name="password"
+placeholder="Password"
+required>
+
+<button type="submit">
+
+Add Technician
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/admin-dashboard" class="back-btn">
+
+⬅ Back Dashboard
+
+</a>
+<hr>
+
+<h3>Current Technicians</h3>
+
+<table class="ticket-table">
+
+<tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Actions</th>
+</tr>
+
+{% for tech in technicians %}
+
+<tr>
+
+<td>{{ tech[1] }}</td>
+
+<td>{{ tech[2] }}</td>
+
+<td>
+
+<a
+href="/edit-technician/{{ tech[0] }}"
+class="action-btn">
+
+✏ Edit
+
+</a>
+
+<a
+href="/delete-technician/{{ tech[0] }}"
+class="logout-btn"
+onclick="return confirm('Delete technician?')">
+
+🗑 Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+<footer class="footer">
+
+    <h2>SecureDesk</h2>
+
+    <p>Smart IT Service Management Platform</p>
+
+    <p>📧 support@securedesk.com</p>
+
+    <p>📞 +91 9876543210</p>
+
+    <p>© 2026 SecureDesk IT Solutions. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+
+</html>
