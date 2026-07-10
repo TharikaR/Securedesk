@@ -2808,3 +2808,70 @@ body{
     box-shadow:0 15px 40px rgba(0,0,0,.08);
 
 }
+/* ===========================
+   Technician Dashboard
+=========================== */
+
+.full-dashboard{
+    width:95%;
+    max-width:1500px;
+    margin:auto;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin:40px 0;
+}
+
+.dashboard-card{
+    width:100%;
+    margin-bottom:30px;
+}
+
+.ticket-table{
+    width:100%;
+}
+
+.ticket-table th,
+.ticket-table td{
+    padding:15px;
+}
+
+.dashboard-card h2{
+    margin-bottom:20px;
+}
+
+.sla-row,
+.activity-row{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 0;
+}
+
+@media(max-width:900px){
+
+.stats-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:600px){
+
+.stats-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.ticket-table{
+
+font-size:12px;
+
+}
+
+}
