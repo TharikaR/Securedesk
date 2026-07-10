@@ -2760,3 +2760,51 @@ body{
 }
 
 }
+.dashboard-badge{
+
+    display:inline-block;
+
+    margin-bottom:20px;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#eef4ff;
+
+    color:#4f46e5;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+}
+
+.ticket-heading{
+
+    margin-top:10px;
+
+    margin-bottom:15px;
+
+    font-size:50px;
+
+    font-weight:700;
+
+}
+.ticket-container{
+
+    width:700px;
+
+    margin:60px auto;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
