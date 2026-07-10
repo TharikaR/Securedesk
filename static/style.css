@@ -2733,4 +2733,30 @@ body{
 .btn-tech:hover{
     background:#8cb8ff;
     transform:translateY(-3px);
+}@media (max-width:768px){
+
+.dashboard-layout{
+    display:flex;
+    flex-direction:column;
+}
+
+.analytics-grid{
+    display:flex;
+    flex-direction:column;
+}
+
+.ticket-table{
+    display:block;
+    overflow-x:auto;
+}
+
+.dashboard-card{
+    width:100%;
+}
+
+.top-navbar{
+    flex-direction:column;
+    gap:10px;
+}
+
 }

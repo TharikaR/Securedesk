@@ -424,6 +424,14 @@ def admin_dashboard():
     cursor.execute("SELECT COUNT(*) FROM tickets WHERE status='Resolved'")
     resolved_today = cursor.fetchone()[0]
 
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM users")
+    employees = c.fetchall()
+
+    c.execute("SELECT * FROM engineers")
+    technicians = c.fetchall()
     # ===========================
     # Recent Tickets
     # ===========================
@@ -485,10 +493,8 @@ def admin_dashboard():
     cursor.execute("""
     SELECT id,name,email,password
     FROM users
-    WHERE role='Employee'
     ORDER BY id
     """)
-
     employees = cursor.fetchall()
 
     # Technician List
@@ -682,7 +688,7 @@ def reports():
         high_priority=high_priority
     )
 
-@app.route('/engineer-login', methods=['GET','POST'])
+@app.route('/technician-login', methods=['GET','POST'])
 def engineer_login():
 
     if request.method == 'POST':
@@ -696,14 +702,13 @@ def engineer_login():
         c.execute("""
             SELECT * FROM engineers
             WHERE email=? AND password=?
-        """,(email,password))
+        """, (email, password))
 
         engineer = c.fetchone()
 
         conn.close()
 
         if engineer:
-
             session['engineer_id'] = engineer[0]
             session['engineer_name'] = engineer[1]
 
@@ -827,6 +832,8 @@ def engineer_register():
 
         name=request.form["name"]
         email=request.form["email"]
+        if not email.endswith("@gmail.com"):
+         return "Only Gmail addresses are allowed"
         password=request.form["password"]
 
         conn=sqlite3.connect("database.db")
@@ -910,6 +917,8 @@ def edit_technician(id):
 
         name = request.form['name']
         email = request.form['email']
+        if not email.endswith("@gmail.com"):
+          return "Only Gmail addresses are allowed"
         password = request.form['password']
 
         c.execute("""

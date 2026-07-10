@@ -28,9 +28,11 @@ href="{{ url_for('static', filename='style.css') }}">
         <form method="POST">
 
            <input type="email"
-                  name="email"
-                  placeholder="Email"
-                  required>
+name="email"
+placeholder="Enter Gmail Address"
+pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
+title="Only Gmail addresses are allowed"
+required>
 
             <input type="password"
                    name="password"
