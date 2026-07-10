@@ -2875,3 +2875,55 @@ font-size:12px;
 }
 
 }
+/* ===========================
+   Technician Dashboard Layout
+=========================== */
+
+.engineer-wrapper{
+    width:95%;
+    max-width:1400px;
+    margin:40px auto;
+}
+
+.engineer-container{
+    width:100%;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.dashboard-card{
+    width:100%;
+    margin-bottom:25px;
+}
+
+.ticket-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.ticket-table th,
+.ticket-table td{
+    padding:14px;
+    text-align:left;
+}
+
+@media (max-width:900px){
+
+.stats-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media (max-width:600px){
+
+.stats-grid{
+grid-template-columns:1fr;
+}
+
+}
